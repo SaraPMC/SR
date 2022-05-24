@@ -16,6 +16,11 @@
         <p>
         <asp:Button ID="ListarSimilaridades" runat="server" Text="Listar Similaridades" OnClick="ListarSimilaridades_Click" />
         </p>
+        <p>
+            &nbsp;</p>
+        <p>
+            <asp:Button ID="ListarRecomendacoes" runat="server" Text="Listar Recomendações" OnClick="ListarRecomendacoes_Click" />
+        </p>
     </form>
 </body>
 </html>

@@ -20,5 +20,11 @@ namespace DinDinAgora
         {
             _ = Dados.ListarSimilaridadePorCliente(1);
         }
+
+        protected void ListarRecomendacoes_Click(object sender, EventArgs e)
+        {
+            _ = Dados.ListarRecomendacoesPorCliente(4);
+
+        }
     }
 }

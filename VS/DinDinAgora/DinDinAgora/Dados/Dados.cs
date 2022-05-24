@@ -19,14 +19,47 @@ namespace DinDinAgora.Dados
             con = new MySqlConnection("server=localhost; user id=root; password=123456; database=dindinagora");
         }
 
-        public List<string> ListarRecomendacoes(int cliente1, int cliente2)
+        public List<Produto> ListarRecomendacoesPorCliente(int cliente)
         {
-            return new List<string>();
+            List<Produto> produtos = new List<Produto>();
+
+            DataTable dt = ListarRecomendacoes(cliente);
+
+            if (dt == null || dt.Rows.Count == 0)
+                return produtos;
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                Produto produto = new Produto
+                {
+                    Id = Convert.ToInt32(dr["ID"]),
+                    Tipo = dr["TIPO"].ToString(),
+                    Descricao = dr["DESCRICAO"].ToString(),
+                    Valor = Convert.ToInt32(dr["VALOR"]),
+                    Status = dr["STATUS"].ToString()
+                };
+
+                produtos.Add(produto);
+            }
+
+            return produtos;
         }
 
-        public List<string> ListarRecomendacoesPorCliente(int cliente)
+        public DataTable ListarRecomendacoes(int cliente)
         {
-            return new List<string>();
+            string sql = @"SELECT P.ID, P.TIPO, P.DESCRICAO, P.VALOR, P.STATUS
+                           FROM DINDINAGORA.SIMILARIDADE S
+                                INNER JOIN DINDINAGORA.TRANSACAO T ON T.ID_CLIENTE = S.ID_CLIENTE_DESTINO
+                                INNER JOIN DINDINAGORA.PRODUTO P ON P.ID = T.ID_PRODUTO
+                            WHERE S.ID_CLIENTE_ORIGEM = " + cliente.ToString() + @"
+                              AND NOT EXISTS(SELECT * FROM DINDINAGORA.TRANSACAO T2 WHERE T2.ID_CLIENTE = S.ID_CLIENTE_ORIGEM AND T2.ID_PRODUTO = T.ID_PRODUTO)";
+
+            MySqlCommand cmd = new MySqlCommand(sql, con);
+            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            return dt;
         }
 
         public List<Cliente> ListarClientes()

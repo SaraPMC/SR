@@ -113,6 +113,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dados\Cliente.cs" />
+    <Compile Include="Dados\Produto.cs" />
     <Compile Include="Dados\SimilaridadeCliente.cs" />
     <Compile Include="Dados\Dados.cs" />
     <Compile Include="Index.aspx.cs">
