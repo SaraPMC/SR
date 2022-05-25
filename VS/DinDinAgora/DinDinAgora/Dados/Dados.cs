@@ -141,7 +141,8 @@ namespace DinDinAgora.Dados
                             WHERE S.ID_CLIENTE_ORIGEM = " + cliente.ToString() + @"
                               AND " + tipo + @" > 0
                               AND NOT EXISTS(SELECT * FROM DINDINAGORA.TRANSACAO T2 WHERE T2.ID_CLIENTE = S.ID_CLIENTE_ORIGEM AND T2.ID_PRODUTO = T.ID_PRODUTO)
-                            ORDER BY " + tipo + " DESC";
+                            ORDER BY " + tipo + @" DESC
+                            LIMIT 6";
 
             MySqlCommand cmd = new MySqlCommand(sql, con);
             MySqlDataAdapter da = new MySqlDataAdapter(cmd);
