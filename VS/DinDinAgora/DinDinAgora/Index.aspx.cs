@@ -40,9 +40,9 @@ namespace DinDinAgora
             ProdutosRecomendadosSimilaridade.DataSource = dtRecomendacaoSimilaridade;
             ProdutosRecomendadosSimilaridade.DataBind();
 
-            //DataTable dtRecomendacaoPontuacao = Dados.ListarRecomendacoesPontuacao(cliente, "S.PONTUACAO");
-            //ProdutosRecomendadosPontuacao.DataSource = dtRecomendacaoPontuacao;
-            //ProdutosRecomendadosPontuacao.DataBind();
+            DataTable dtRecomendacaoPontuacao = Dados.ListarRecomendacoes(cliente, "S.PONTUACAO");
+            ProdutosRecomendadosPontuacao.DataSource = dtRecomendacaoPontuacao;
+            ProdutosRecomendadosPontuacao.DataBind();
         }
 
         protected void Clientes_SelectedIndexChanged1(object sender, EventArgs e)

@@ -10,7 +10,7 @@
 
       #DIVZAO {
           width:1507px;
-          height:500px;
+          height:600px;
           
           background-color:#1B3B6B;
           border-radius: 10px;
@@ -84,7 +84,7 @@
         }
         #PRESCRICAO {
           width: 727px;
-          height:305px;
+          height:197px;
           background-color:#2B5EAB;
           border: 0.5px solid rgb(0, 0, 0);
       }
@@ -108,7 +108,7 @@
         }
         #responsaveis {
           width:95%;
-          height:226px;
+          height:308px;
           background-color:#2B5EAB;
           border: 1px solid rgb(256, 256, 256);
           float: left;
@@ -172,6 +172,16 @@
 
   
    
+        #PRESCRICAO0 {
+          width: 727px;
+          height:197px;
+          background-color:#2B5EAB;
+          border: 0.5px solid rgb(0, 0, 0);
+      }
+          
+
+  
+   
     </style>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -221,7 +231,7 @@
                 <a href="">Inicial</a>
               </li>
               <li class="breadcrumb-item">
-                  <a href="indexHOME.html">Análise de Recomendação</a>
+                  <a href="">Análise de Recomendação</a>
                 </li>
                
                
@@ -279,7 +289,7 @@
                                         <br />
                                         PRODUTOS CONTRATADOS </b>
                                         <div id="responsaveis" style="margin-left: 1px; margin-top: 2.7%;">
-                                            <asp:GridView ID="ProdutosContratados" runat="server" Height="214px" Width="675px" 
+                                            <asp:GridView ID="ProdutosContratados" runat="server" Height="10px" Width="675px" 
                                                 AlternatingRowStyle-BackColor="#b5cbec" RowStyle-BackColor="White" HeaderStyle-ForeColor="White"
                                                 RowStyle-ForeColor="Black">
                                                 <AlternatingRowStyle BackColor="#B5CBEC" />
@@ -303,14 +313,14 @@
                             <div id="coluna2">
                               <asp:Label ID="DataAtual" runat="server" Text="" style="text-align:center; color:#C7EAFB; margin-right: 16%;margin-top: 30px; border: 1px solid white; width:211px; border-radius: 5px;float: right; height: 28px;"></asp:Label>
                                 </a><b style=" color:white; float: right;margin-right: 2%;margin-top: 30px;">Data </b>
-                             <div id="titulo"style="color:white; margin-top:16.5%; margin-left:4%"> 
-                                <b>RECOMENDAÇÕES&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b>
+                             <div id="titulo"style="color:white; margin-top:10.5%; margin-left:4%"> 
+                                <b>RECOMENDAÇÕES&nbsp;POR SIMILARIDADE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b>
                               
                              &nbsp;</div>
                              <div id="PRESCRICAO" style="margin-top: 15px; margin-left: 21px; border-color:white;  "> 
                               
                                 
-                                 <asp:GridView ID="ProdutosRecomendadosSimilaridade" runat="server" Height="302px" Width="722px" 
+                                 <asp:GridView ID="ProdutosRecomendadosSimilaridade" runat="server" Height="10px" Width="722px" 
                                      AlternatingRowStyle-BackColor="#b5cbec" RowStyle-BackColor="White" HeaderStyle-ForeColor="White">
 <AlternatingRowStyle BackColor="#B5CBEC"></AlternatingRowStyle>
 
@@ -329,6 +339,23 @@
                               <a class="form-control " id="remedios_prescrito" style="color:white; margin-top:1%;width:80px; font-size: 15px; margin-left:5px; background-color:#1B3B6B;"  placeholder="Remedios prescritos" >x</a>
               
                              -->
+                             <div id="titulo0"style="color:white; margin-top:2.5%; margin-left:4%"> 
+                                <b>RECOMENDAÇÕES&nbsp;POR PONTUAÇÃO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <div id="PRESCRICAO0" style="margin-top: 15px; margin-left: 1px; border-color:white;  "> 
+                              
+                                
+                                 <asp:GridView ID="ProdutosRecomendadosPontuacao" runat="server" Height="10px" Width="722px" 
+                                                AlternatingRowStyle-BackColor="#b5cbec" RowStyle-BackColor="White" HeaderStyle-ForeColor="White"
+                                                RowStyle-ForeColor="Black">
+<AlternatingRowStyle BackColor="#B5CBEC"></AlternatingRowStyle>
+
+                                     <HeaderStyle ForeColor="White" />
+                                     <RowStyle BackColor="White" />
+                                 </asp:GridView>
+               
+                                
+                             </div>
+                                 </b>
+                                </div>
                           </div>
                       
                                 
