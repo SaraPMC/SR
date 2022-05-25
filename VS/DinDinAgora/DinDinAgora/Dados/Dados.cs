@@ -19,49 +19,6 @@ namespace DinDinAgora.Dados
             con = new MySqlConnection("server=localhost; user id=root; password=123456; database=dindinagora");
         }
 
-        public List<Produto> ListarRecomendacoesPorCliente(int cliente)
-        {
-            List<Produto> produtos = new List<Produto>();
-
-            DataTable dt = ListarRecomendacoes(cliente);
-
-            if (dt == null || dt.Rows.Count == 0)
-                return produtos;
-
-            foreach (DataRow dr in dt.Rows)
-            {
-                Produto produto = new Produto
-                {
-                    Id = Convert.ToInt32(dr["ID"]),
-                    Tipo = dr["TIPO"].ToString(),
-                    Descricao = dr["DESCRICAO"].ToString(),
-                    Valor = Convert.ToInt32(dr["VALOR"]),
-                    Status = dr["STATUS"].ToString()
-                };
-
-                produtos.Add(produto);
-            }
-
-            return produtos;
-        }
-
-        public DataTable ListarRecomendacoes(int cliente)
-        {
-            string sql = @"SELECT P.ID, P.TIPO, P.DESCRICAO, P.VALOR, P.STATUS
-                           FROM DINDINAGORA.SIMILARIDADE S
-                                INNER JOIN DINDINAGORA.TRANSACAO T ON T.ID_CLIENTE = S.ID_CLIENTE_DESTINO
-                                INNER JOIN DINDINAGORA.PRODUTO P ON P.ID = T.ID_PRODUTO
-                            WHERE S.ID_CLIENTE_ORIGEM = " + cliente.ToString() + @"
-                              AND NOT EXISTS(SELECT * FROM DINDINAGORA.TRANSACAO T2 WHERE T2.ID_CLIENTE = S.ID_CLIENTE_ORIGEM AND T2.ID_PRODUTO = T.ID_PRODUTO)";
-
-            MySqlCommand cmd = new MySqlCommand(sql, con);
-            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
-
-            return dt;
-        }
-
         public List<Cliente> ListarClientes()
         {
             List<Cliente> clientes = new List<Cliente>();
@@ -140,6 +97,66 @@ namespace DinDinAgora.Dados
                              INNER JOIN DINDINAGORA.CLIENTE CO ON CO.ID = S.ID_CLIENTE_ORIGEM
                              INNER JOIN DINDINAGORA.CLIENTE CD ON CD.ID = S.ID_CLIENTE_DESTINO
                            WHERE S.ID_CLIENTE_ORIGEM = " + cliente.ToString();
+
+            MySqlCommand cmd = new MySqlCommand(sql, con);
+            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            return dt;
+        }
+
+        public List<Produto> ListarRecomendacoesPorCliente(int cliente)
+        {
+            List<Produto> produtos = new List<Produto>();
+
+            DataTable dt = ListarRecomendacoes(cliente,"S.SIMILARIDADE");
+
+            if (dt == null || dt.Rows.Count == 0)
+                return produtos;
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                Produto produto = new Produto
+                {
+                    //Id = Convert.ToInt32(dr["ID"]),
+                    Tipo = dr["TIPO"].ToString(),
+                    Descricao = dr["DESCRICAO"].ToString(),
+                    Valor = Convert.ToInt32(dr["VALOR"]),
+                    Status = dr["STATUS"].ToString()
+                };
+
+                produtos.Add(produto);
+            }
+
+            return produtos;
+        }
+
+        public DataTable ListarRecomendacoes(int cliente, string tipo)
+        {
+            string sql = @"SELECT P.TIPO, P.DESCRICAO, P.VALOR, P.STATUS, " + tipo + @"
+                           FROM DINDINAGORA.SIMILARIDADE S
+                                INNER JOIN DINDINAGORA.TRANSACAO T ON T.ID_CLIENTE = S.ID_CLIENTE_DESTINO
+                                INNER JOIN DINDINAGORA.PRODUTO P ON P.ID = T.ID_PRODUTO
+                            WHERE S.ID_CLIENTE_ORIGEM = " + cliente.ToString() + @"
+                              AND " + tipo + @" > 0
+                              AND NOT EXISTS(SELECT * FROM DINDINAGORA.TRANSACAO T2 WHERE T2.ID_CLIENTE = S.ID_CLIENTE_ORIGEM AND T2.ID_PRODUTO = T.ID_PRODUTO)
+                            ORDER BY " + tipo + " DESC";
+
+            MySqlCommand cmd = new MySqlCommand(sql, con);
+            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            return dt;
+        }
+
+        public DataTable ListarProdutos(int cliente)
+        {
+            string sql = @"SELECT P.TIPO, P.DESCRICAO, P.VALOR, P.STATUS
+                           FROM DINDINAGORA.TRANSACAO T
+                             INNER JOIN DINDINAGORA.PRODUTO P ON P.ID = T.ID_PRODUTO
+                           WHERE T.ID_CLIENTE = " + cliente.ToString();
 
             MySqlCommand cmd = new MySqlCommand(sql, con);
             MySqlDataAdapter da = new MySqlDataAdapter(cmd);

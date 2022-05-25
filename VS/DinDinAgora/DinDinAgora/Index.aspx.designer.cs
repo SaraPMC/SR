@@ -24,30 +24,39 @@ namespace DinDinAgora
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// ListarClientes control.
+        /// Clientes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ListarClientes;
+        protected global::System.Web.UI.WebControls.DropDownList Clientes;
 
         /// <summary>
-        /// ListarSimilaridades control.
+        /// ProdutosContratados control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ListarSimilaridades;
+        protected global::System.Web.UI.WebControls.GridView ProdutosContratados;
 
         /// <summary>
-        /// ListarRecomendacoes control.
+        /// DataAtual control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ListarRecomendacoes;
+        protected global::System.Web.UI.WebControls.Label DataAtual;
+
+        /// <summary>
+        /// ProdutosRecomendadosSimilaridade control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView ProdutosRecomendadosSimilaridade;
     }
 }

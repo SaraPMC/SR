@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Web.UI;
 
 namespace DinDinAgora
@@ -8,23 +9,46 @@ namespace DinDinAgora
         private Dados.Dados Dados;
         protected void Page_Load(object sender, EventArgs e)
         {
-            Dados = new Dados.Dados();
+            if (Clientes.SelectedValue == "")
+            {
+                Dados = new Dados.Dados();
+
+                DataTable dt = Dados.ListarClientesDataTable();
+            
+                Clientes.DataSource = dt;
+                Clientes.DataValueField = "ID";
+                Clientes.DataTextField = "NOME";
+                Clientes.DataBind();
+
+                if (!string.IsNullOrEmpty(Clientes.SelectedValue))
+                    ListarProdutos(Convert.ToInt32(Clientes.SelectedValue));
+
+                DataAtual.Text = DateTime.Today.ToString("dd/MM/yyyy");
+            }
         }
 
-        protected void ListarClientes_Click(object sender, EventArgs e)
+        private void ListarProdutos(int cliente)
         {
-            _ = Dados.ListarClientes();
+            if (Dados == null)
+                Dados = new Dados.Dados();
+
+            DataTable dtProdutos = Dados.ListarProdutos(cliente);
+            ProdutosContratados.DataSource = dtProdutos;
+            ProdutosContratados.DataBind();
+
+            DataTable dtRecomendacaoSimilaridade = Dados.ListarRecomendacoes(cliente, "S.SIMILARIDADE");
+            ProdutosRecomendadosSimilaridade.DataSource = dtRecomendacaoSimilaridade;
+            ProdutosRecomendadosSimilaridade.DataBind();
+
+            //DataTable dtRecomendacaoPontuacao = Dados.ListarRecomendacoesPontuacao(cliente, "S.PONTUACAO");
+            //ProdutosRecomendadosPontuacao.DataSource = dtRecomendacaoPontuacao;
+            //ProdutosRecomendadosPontuacao.DataBind();
         }
 
-        protected void ListarSimilaridades_Click(object sender, EventArgs e)
+        protected void Clientes_SelectedIndexChanged1(object sender, EventArgs e)
         {
-            _ = Dados.ListarSimilaridadePorCliente(1);
-        }
-
-        protected void ListarRecomendacoes_Click(object sender, EventArgs e)
-        {
-            _ = Dados.ListarRecomendacoesPorCliente(4);
-
+            if (!string.IsNullOrEmpty(Clientes.SelectedValue))
+                ListarProdutos(Convert.ToInt32(Clientes.SelectedValue));
         }
     }
 }
